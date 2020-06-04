@@ -234,12 +234,12 @@
 
       <path d="M 150 42.5 Q 505 42.48 505 59.9 V 210" fill="none" stroke="none" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" id="incomming"/>
       <path d="M 505 550 Q 505 560 406.24 560 Q 307.48 560 307.48 313.76 Q 307.48 67.52 160.1 67.5" fill="none" stroke="none" stroke-width="3" stroke-miterlimit="10" pointer-events="stroke" id="outgoing"/>
-      <circle r="10" class="acquisition" />
-      <circle r="10" class="acquisition" />
-      <circle r="10" class="acquisition" />
-      <circle r="10" class="acquisition" />
-      <circle r="10" class="acquisition" />
-      <circle r="10" class="acquisition" />
+      <circle r="10" class="acquisition" fill="none" />
+      <circle r="10" class="acquisition" fill="none"/>
+      <circle r="10" class="acquisition" fill="none"/>
+      <circle r="10" class="acquisition" fill="none"/>
+      <circle r="10" class="acquisition" fill="none"/>
+      <circle r="10" class="acquisition" fill="none"/>
 
       <circle cx="505" cy="210" r="10" class="bucket" fill="none" />
 
@@ -247,7 +247,7 @@
       <circle cx="505" cy="310" r="10" class="image" fill="none" />
       <circle cx="505" cy="310" r="10" class="image" fill="none" />
 
-
+ 
   </svg>
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
@@ -331,7 +331,20 @@
         document.onclick = resetZoom
     }
 
+  
+    
     document.onclick = inputChange;
+    var is_paused = false;
+    document.addEventListener("keydown", event => {
+    if (event.keyCode === 32) {
+        if (is_paused) timeline.play();
+        else timeline.pause();
+
+        is_paused = !is_paused;
+    }
+  
+    });
+    
 
 
     //  timeline.add({
