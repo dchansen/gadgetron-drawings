@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inkscape Output</title>
+    <title>Gadgetron chain</title>
 </head>
 <body>
    <svg style="background-color:#fff"  version="1.1" width="781px" height="662px" viewBox="-0.5 -0.5 781 662" id='graph'>
@@ -247,14 +247,27 @@
       <circle cx="505" cy="310" r="10" class="image" fill="none" />
       <circle cx="505" cy="310" r="10" class="image" fill="none" />
 
- 
+     
+      <circle r="10" class="acquisition2" fill="none" />
+      <circle r="10" class="acquisition2" fill="none"/>
+      <circle r="10" class="acquisition2" fill="none"/>
+      <circle r="10" class="acquisition2" fill="none"/>
+      <circle r="10" class="acquisition2" fill="none"/>
+      <circle r="10" class="acquisition2" fill="none"/>
+
+      <circle cx="505" cy="210" r="10" class="bucket2" fill="none" />
+
+      <circle cx="505" cy="310" r="10" class="image2" fill="none" />
+      <circle cx="505" cy="310" r="10" class="image2" fill="none" />
+      <circle cx="505" cy="310" r="10" class="image2" fill="none" />
   </svg>
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
  <script>
-     var timeline = anime.timeline({autoplay: true, loop: true});
      var path = anime.path("#incomming")
      var path_out = anime.path("#outgoing")
+     var timeline = anime.timeline({autoplay: true, loop: true});
+
      timeline.add({
          targets: '.acquisition',
 
@@ -315,10 +328,74 @@
             autoplay: true,
             easing: 'easeOutQuint'
         });
+     }
+
+        var timeline2 = anime.timeline({autoplay: false, loop: true});
+        timeline2.add({delay: 10000});
+
+     timeline2.add({
+         targets: '.acquisition2',
+
+         keyframes: [
+             {fill: "#d5e8d4",stroke: "#82b366", duration: 1},
+         {translateX: path('x'),translateY: path('y'),duration: 3000},
+         {fill: "none",stroke: "none", duration: 1, cx: -10000, cy: -10000},
+         ],
+         easing: 'easeOutQuint',
+        delay: anime.stagger(100)
+
+     });
+     timeline2.add({
+         targets: '.bucket2',
+         keyframes: [
+         {fill: "#F8CECC",stroke: "#B85450", duration: 500},
+         {translateY: 100, duration: 1500},
+         {fill: "none",stroke: "none", duration: 1, cx: -10000, cy: -10000},
+         ],
+         
+         easing: 'easeOutQuint'
+     });
+     timeline2.add({
+         targets: '.image2',
+         keyframes: [
+         {fill: "#DAE8FC",stroke: "#6C8EBF", duration: 500},
+         {translateY: 100}
+         ],
+         duration: 2000,
+         easing: 'easeOutQuint'
+     });
+     timeline2.add({
+         targets: '.image2',
+         keyframes: [
+         {translateY: 200}
+         ],
+         duration: 1500,
+         delay: anime.stagger(100),
+         easing: 'easeOutQuint'
+     });
+     timeline2.add({
+         targets: '.image2',
+         keyframes: [
+         
+         {translateY: 240, duration: 300},
+         {cy: 0, cx: 0, duration: 1},
+         {translateX: path_out('x'), translateY: path_out('y'), duration: 3000}
+         ],
+         
+         delay: anime.stagger(100),
+         easing: 'easeOutQuint'
+     });
+
+
+     function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
         document.onclick = inputChange
+
+        sleep(5000).then(  timeline2.play);
   
-     }
+     
 
      function inputChange(e) {
         var zoom = anime({
@@ -337,8 +414,8 @@
     var is_paused = false;
     document.addEventListener("keydown", event => {
     if (event.keyCode === 32) {
-        if (is_paused) timeline.play();
-        else timeline.pause();
+        if (is_paused){ timeline.play(); timeline2.play();}
+        else {timeline.pause(); timeline2.pause();}
 
         is_paused = !is_paused;
     }
