@@ -412,13 +412,13 @@
     
     document.onclick = inputChange;
     var is_paused = false;
-    document.oncontextmenu(event => {
-    
+    document.addEventListener("keydown", event => {
+    if (event.keyCode === 85) {
         if (is_paused){ timeline.play(); timeline2.play();}
         else {timeline.pause(); timeline2.pause();}
 
         is_paused = !is_paused;
-    
+    }
   
     });
     
